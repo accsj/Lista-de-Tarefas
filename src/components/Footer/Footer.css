@@ -1,0 +1,21 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(2px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    padding: 0.8rem 5%;
+    margin-top: 16rem;
+}
+
+.disclaimer {
+    padding: 0.3rem 2rem; 
+}
+
+@media (max-width:466px) {
+    .footer {
+        font-size: 0.8rem;
+    }
+}

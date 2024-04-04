@@ -1,0 +1,8 @@
+.back_container i {
+    position: relative;
+    cursor: pointer;
+    right: 8.5rem;
+    margin-top: 0.2rem;
+    color: #fff;
+    font-size: 33px;
+}
