@@ -120,6 +120,16 @@ const TaskList = () => {
         try {
             document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
             
+            toast.success('Logout realizado com sucesso', {
+                position: "top-left",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
             setTimeout(() => {
                 window.location.reload();
             }, 1000); 
