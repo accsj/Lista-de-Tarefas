@@ -118,22 +118,8 @@ const TaskList = () => {
     
     const handleLogout = async () => {
         try {
-            await axios.post('https://lista-de-tarefas-backend.onrender.com/logout', null, {
-                withCredentials: true,
-                headers: {
-                    'Authorization': `Bearer ${token.split('=')[1]}`
-                }
-            });
-            toast.success('Logout realizado com sucesso', {
-                position: "top-left",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            
             setTimeout(() => {
                 window.location.reload();
             }, 1000); 
