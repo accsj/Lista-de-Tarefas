@@ -3,6 +3,7 @@ import axios from 'axios';
 import Task from '../../components/Task/Task';
 import { toast } from 'react-toastify';
 import Footer from '../Footer/Footer';
+import Cookies from 'js-cookie';
 
 const TaskList = () => {
     const [tasks, setTasks] = useState([]);
@@ -11,19 +12,10 @@ const TaskList = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await axios.get('https://lista-de-tarefas-backend.onrender.com/tasklist', { withCredentials: true });
+                const response = await axios.get('https://lista-de-tarefas-backend.onrender.com/tasklist');
                 setTasks(response.data);
             } catch (error) {
-                toast.error('Erro ao buscar tarefas', {
-                    position: "top-left",
-                    autoClose: 5000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
+                handleError(error);
             }
         };
 
@@ -36,106 +28,83 @@ const TaskList = () => {
 
     const handleAddTask = async () => {
         if (inputValue.trim() === '') {
-            toast.error('Digite uma tarefa', {
-                position: "top-left",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+            toast.error('Digite uma tarefa');
             return;
         }
         try {
             const response = await axios.post('https://lista-de-tarefas-backend.onrender.com/addtask', {
                 title: inputValue,
-            }, { withCredentials: true }); 
-
-            const newTask = response.data;
-            setTasks([...tasks, newTask]);
-            toast.success('Tarefa adicionada', {
-                position: "top-left",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
             });
+            handleSuccess(response, 'Tarefa adicionada');
             setInputValue('');
         } catch (error) {
-            toast.error('Erro ao adicionar tarefa', {
-                position: "top-left",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+            handleError(error, 'Erro ao adicionar tarefa');
         }
     };
 
-    const handleDeleteTask = async taskId => { 
+    const handleDeleteTask = async taskId => {
         try {
-            await axios.delete(`https://lista-de-tarefas-backend.onrender.com/deletetask/${taskId}`, { withCredentials: true });
-            const newTasks = tasks.filter(task => task.id !== taskId); 
+            await axios.delete(`https://lista-de-tarefas-backend.onrender.com/deletetask/${taskId}`);
+            const newTasks = tasks.filter(task => task.id !== taskId);
             setTasks(newTasks);
-            toast.success('Tarefa Excluida', {
-                position: "top-left",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+            toast.success('Tarefa Excluída');
         } catch (error) {
-            toast.error('Erro ao excluir tarefa', {
-                position: "top-left",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
+            handleError(error, 'Erro ao excluir tarefa');
         }
     };
-    
+
+    const handleSuccess = (response, message) => {
+        setTasks([...tasks, response.data]);
+        toast.success(message);
+    };
+
+    const handleError = (error, message) => {
+        if (error.response) {
+            console.error(error.response.data);
+            toast.error(message);
+        } else if (error.request) {
+            console.error(error.request);
+            toast.error('Erro de requisição');
+        } else {
+            console.error('Error', error.message);
+            toast.error('Erro desconhecido');
+        }
+    };
+
+    axios.interceptors.request.use(config => {
+        const token = Cookies.get('token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    });
 
     return (
         <>
-        <main className="main_container">
-            <div className='task_container'>
-                <h2>Lista de Tarefas</h2>
-                <div className='input_add_task'>
-                    <input
-                        type="text"
-                        value={inputValue}
-                        onChange={handleInputChange}
-                        placeholder="Digite uma nova tarefa"
-                    />
-                </div>
-                <button className='btn_add' onClick={handleAddTask}>Adicionar</button>
-                <div className='tasks'>
-                    {tasks.map(task => (
-                        <Task className='task_map'
-                            key={task.id} 
-                            task={task}
-                            onDelete={() => handleDeleteTask(task.id)} 
+            <main className="main_container">
+                <div className='task_container'>
+                    <h2>Lista de Tarefas</h2>
+                    <div className='input_add_task'>
+                        <input
+                            type="text"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            placeholder="Digite uma nova tarefa"
                         />
-                    ))}
+                    </div>
+                    <button className='btn_add' onClick={handleAddTask}>Adicionar</button>
+                    <div className='tasks'>
+                        {tasks.map(task => (
+                            <Task className='task_map'
+                                key={task.id}
+                                task={task}
+                                onDelete={() => handleDeleteTask(task.id)}
+                            />
+                        ))}
+                    </div>
                 </div>
-            </div>
-        </main>
-        <Footer/>
+            </main>
+            <Footer />
         </>
     );
 };
