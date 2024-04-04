@@ -31,7 +31,7 @@ const TaskList = () => {
         };
 
         fetchTasks();
-    }, []);
+    }, [token]);
 
     const handleInputChange = event => {
         setInputValue(event.target.value);
