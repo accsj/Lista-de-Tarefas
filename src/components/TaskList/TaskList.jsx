@@ -3,21 +3,15 @@ import axios from 'axios';
 import Task from '../../components/Task/Task';
 import { toast } from 'react-toastify';
 import Footer from '../Footer/Footer';
-import Cookies from 'js-cookie'; 
 
 const TaskList = () => {
     const [tasks, setTasks] = useState([]);
     const [inputValue, setInputValue] = useState('');
-    const token = Cookies.get('token'); 
 
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await axios.get('https://lista-de-tarefas-backend.onrender.com/tasklist', { 
-                    headers: {
-                        Authorization: `Bearer ${token}` 
-                    }
-                });
+                const response = await axios.get('https://lista-de-tarefas-backend.onrender.com/tasklist', { withCredentials: true });
                 setTasks(response.data);
             } catch (error) {
                 toast.error('Erro ao buscar tarefas', {
@@ -34,7 +28,7 @@ const TaskList = () => {
         };
 
         fetchTasks();
-    }, [token]); 
+    }, []);
 
     const handleInputChange = event => {
         setInputValue(event.target.value);
