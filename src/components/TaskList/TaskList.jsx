@@ -11,7 +11,7 @@ const TaskList = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/tasklist', { withCredentials: true });
+                const response = await axios.get('https://lista-de-tarefas-backend.onrender.com/tasklist', { withCredentials: true });
                 setTasks(response.data);
             } catch (error) {
                 toast.error('Erro ao buscar tarefas', {
@@ -49,7 +49,7 @@ const TaskList = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:5000/addtask', {
+            const response = await axios.post('https://lista-de-tarefas-backend.onrender.com/addtask', {
                 title: inputValue,
             }, { withCredentials: true }); 
 
@@ -82,7 +82,7 @@ const TaskList = () => {
 
     const handleDeleteTask = async taskId => { 
         try {
-            await axios.delete(`http://localhost:5000/deletetask/${taskId}`, { withCredentials: true });
+            await axios.delete(`https://lista-de-tarefas-backend.onrender.com/deletetask/${taskId}`, { withCredentials: true });
             const newTasks = tasks.filter(task => task.id !== taskId); 
             setTasks(newTasks);
             toast.success('Tarefa Excluida', {

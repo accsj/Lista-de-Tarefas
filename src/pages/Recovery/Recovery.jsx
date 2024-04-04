@@ -19,7 +19,7 @@ export default function RecoveryPage () {
         event.preventDefault();
 
         try {
-            const response = await Axios.post("http://localhost:5000/recovery", {
+            const response = await Axios.post("https://lista-de-tarefas-backend.onrender.com/recovery", {
                 email
             });
             

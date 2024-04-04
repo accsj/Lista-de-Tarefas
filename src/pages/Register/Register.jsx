@@ -73,7 +73,7 @@ export default function RegisterPage () {
             return;
         }
         try {
-            const response = await Axios.post("http://localhost:5000/register", {
+            const response = await Axios.post("https://lista-de-tarefas-backend.onrender.com/register", {
                 username,
                 email,
                 password

@@ -45,7 +45,7 @@ export default function PassRecoveryPage () {
             return;
         }
         try {
-            const response = await Axios.post('http://localhost:5000/password-recovery', {
+            const response = await Axios.post('https://lista-de-tarefas-backend.onrender.com/password-recovery', {
                 password,
                 token: token
             })
