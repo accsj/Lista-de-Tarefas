@@ -116,10 +116,49 @@ const TaskList = () => {
         }
     };
     
+    const handleLogout = async () => {
+        try {
+            await axios.post('https://lista-de-tarefas-backend.onrender.com/logout', null, {
+                withCredentials: true,
+                headers: {
+                    'Authorization': `Bearer ${token.split('=')[1]}`
+                }
+            });
+            toast.success('Logout realizado com sucesso', {
+                position: "top-left",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000); 
+
+        } catch (error) {
+            toast.error('Erro ao fazer logout', {
+                position: "top-left",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+    };
+    
 
     return (
         <>
         <main className="main_container">
+            <div className="btn_logout_container">
+                <button onClick={handleLogout} className="btn_logout">Log out</button>
+            </div>
             <div className='task_container'>
                 <h2>Lista de Tarefas</h2>
                 <div className='input_add_task'>

@@ -14,12 +14,13 @@
     cursor: pointer;
     font-size: 16px;
     color: #131313;
-    opacity: 0.85;
     background-color: rgb(255, 30, 0);
     margin-top: 1rem;
+    -webkit-transition: -webkit-transform .2s ease;
+    transition: transform .2s ease;
 }
 
 .btn_login:hover {
-    transform: scale(1.05);
-    transition: all .1s ease-in-out smooth;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }

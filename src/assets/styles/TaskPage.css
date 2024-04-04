@@ -18,6 +18,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    flex-direction: column;
 }
 
 .task_container {
@@ -25,7 +26,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 6rem;
+    margin-top: 2rem;
     padding: 2rem 5rem 5rem;
     background: transparent;
     border-radius: 8px;
@@ -69,14 +70,15 @@ body {
     cursor: pointer;
     font-size: 16px;
     color: #131313;
-    opacity: 0.85;
-    background-color: rgb(250, 0, 0);
+    background-color: #ff2a00;
     margin-top: 1rem;
+    -webkit-transition: -webkit-transform .2s ease;
+    transition: transform .2s ease;
 }
 
 .btn_add:hover {
-    transform: scale(1.05);
-    transition: all .1s ease-in-out smooth;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .tasks {
@@ -119,13 +121,15 @@ body {
     cursor: pointer;
     font-size: 16px;
     color: #131313;
-    background-color: rgb(250, 0, 0);
+    background-color: #ff2a00;
     margin-top: 0.2rem;
+    -webkit-transition: -webkit-transform .2s ease;
+    transition: transform .2s ease;
 }
 
 .btn_del:hover {
-    transform: scale(1.05);
-    transition: all .1s ease-in-out smooth;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .tasks_task_container {
@@ -142,3 +146,36 @@ body {
     flex-wrap: nowrap;
 }
 
+
+.btn_logout_container {
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(2px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    border-radius: 40px;
+    margin-left: 85%;
+    margin-top: 2rem;
+    -webkit-transition: -webkit-transform .3s ease;
+    transition: transform .3s ease;
+}
+
+.btn_logout {
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.btn_logout_container:hover {
+    background-color: #ff2a00;
+    color: #fff;
+    box-shadow: #0d3b66;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+@media (max-width: 776px) {
+    .btn_logout_container {
+        margin-left: 0;
+    }
+}

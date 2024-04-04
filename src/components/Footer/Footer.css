@@ -19,3 +19,9 @@
         font-size: 0.8rem;
     }
 }
+
+@media (max-width:442px) {
+    .footer {
+        font-size: 0.6rem;
+    }
+}
