@@ -12,7 +12,10 @@ const TaskList = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await axios.get('https://lista-de-tarefas-backend.onrender.com/tasklist', { withCredentials: true });
+                const token = Cookies.get('token');
+                const response = await axios.get('https://lista-de-tarefas-backend.onrender.com/tasklist', {
+                    token: token
+                }, { withCredentials: true });
                 setTasks(response.data);
             } catch (error) {
                 toast.error('Erro ao buscar tarefas', {
@@ -50,9 +53,11 @@ const TaskList = () => {
             return;
         }
         try {
+            const token = Cookies.get('token');
             const response = await axios.post('https://lista-de-tarefas-backend.onrender.com/addtask', {
                 title: inputValue,
-            }, { withCredentials: true }); 
+                token: token 
+            }, { withCredentials: true });
 
             const newTask = response.data;
             setTasks([...tasks, newTask]);
@@ -81,12 +86,16 @@ const TaskList = () => {
         }
     };
 
-    const handleDeleteTask = async taskId => { 
+    const handleDeleteTask = async taskId => {
         try {
-            await axios.delete(`https://lista-de-tarefas-backend.onrender.com/deletetask/${taskId}`, { withCredentials: true });
-            const newTasks = tasks.filter(task => task.id !== taskId); 
+            const token = Cookies.get('token');
+            await axios.delete(`https://lista-de-tarefas-backend.onrender.com/deletetask/${taskId}`, {
+                data: { token: token }, 
+                withCredentials: true
+            });
+            const newTasks = tasks.filter(task => task.id !== taskId);
             setTasks(newTasks);
-            toast.success('Tarefa Excluida', {
+            toast.success('Tarefa Excluída', {
                 position: "top-left",
                 autoClose: 5000,
                 hideProgressBar: true,
@@ -109,41 +118,33 @@ const TaskList = () => {
             });
         }
     };
-    
-    axios.interceptors.request.use(config => {
-        const token = Cookies.get('token');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-    });
 
     return (
         <>
-        <main className="main_container">
-            <div className='task_container'>
-                <h2>Lista de Tarefas</h2>
-                <div className='input_add_task'>
-                    <input
-                        type="text"
-                        value={inputValue}
-                        onChange={handleInputChange}
-                        placeholder="Digite uma nova tarefa"
-                    />
-                </div>
-                <button className='btn_add' onClick={handleAddTask}>Adicionar</button>
-                <div className='tasks'>
-                    {tasks.map(task => (
-                        <Task className='task_map'
-                            key={task.id} 
-                            task={task}
-                            onDelete={() => handleDeleteTask(task.id)} 
+            <main className="main_container">
+                <div className='task_container'>
+                    <h2>Lista de Tarefas</h2>
+                    <div className='input_add_task'>
+                        <input
+                            type="text"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            placeholder="Digite uma nova tarefa"
                         />
-                    ))}
+                    </div>
+                    <button className='btn_add' onClick={handleAddTask}>Adicionar</button>
+                    <div className='tasks'>
+                        {tasks.map(task => (
+                            <Task className='task_map'
+                                key={task.id}
+                                task={task}
+                                onDelete={() => handleDeleteTask(task.id)}
+                            />
+                        ))}
+                    </div>
                 </div>
-            </div>
-        </main>
-        <Footer/>
+            </main>
+            <Footer />
         </>
     );
 };
