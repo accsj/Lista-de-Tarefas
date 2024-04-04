@@ -3,7 +3,6 @@ import axios from 'axios';
 import Task from '../../components/Task/Task';
 import { toast } from 'react-toastify';
 import Footer from '../Footer/Footer';
-import Cookies from 'js-cookie';
 
 const TaskList = () => {
     const [tasks, setTasks] = useState([]);
@@ -12,10 +11,7 @@ const TaskList = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const token = Cookies.get('token');
-                const response = await axios.get('https://lista-de-tarefas-backend.onrender.com/tasklist', {
-                    token: token
-                }, { withCredentials: true });
+                const response = await axios.get('https://lista-de-tarefas-backend.onrender.com/tasklist', { withCredentials: true });
                 setTasks(response.data);
             } catch (error) {
                 toast.error('Erro ao buscar tarefas', {
@@ -53,11 +49,9 @@ const TaskList = () => {
             return;
         }
         try {
-            const token = Cookies.get('token');
             const response = await axios.post('https://lista-de-tarefas-backend.onrender.com/addtask', {
                 title: inputValue,
-                token: token 
-            }, { withCredentials: true });
+            }, { withCredentials: true }); 
 
             const newTask = response.data;
             setTasks([...tasks, newTask]);
@@ -86,16 +80,12 @@ const TaskList = () => {
         }
     };
 
-    const handleDeleteTask = async taskId => {
+    const handleDeleteTask = async taskId => { 
         try {
-            const token = Cookies.get('token');
-            await axios.delete(`https://lista-de-tarefas-backend.onrender.com/deletetask/${taskId}`, {
-                data: { token: token }, 
-                withCredentials: true
-            });
-            const newTasks = tasks.filter(task => task.id !== taskId);
+            await axios.delete(`https://lista-de-tarefas-backend.onrender.com/deletetask/${taskId}`, { withCredentials: true });
+            const newTasks = tasks.filter(task => task.id !== taskId); 
             setTasks(newTasks);
-            toast.success('Tarefa Excluída', {
+            toast.success('Tarefa Excluida', {
                 position: "top-left",
                 autoClose: 5000,
                 hideProgressBar: true,
@@ -118,33 +108,34 @@ const TaskList = () => {
             });
         }
     };
+    
 
     return (
         <>
-            <main className="main_container">
-                <div className='task_container'>
-                    <h2>Lista de Tarefas</h2>
-                    <div className='input_add_task'>
-                        <input
-                            type="text"
-                            value={inputValue}
-                            onChange={handleInputChange}
-                            placeholder="Digite uma nova tarefa"
-                        />
-                    </div>
-                    <button className='btn_add' onClick={handleAddTask}>Adicionar</button>
-                    <div className='tasks'>
-                        {tasks.map(task => (
-                            <Task className='task_map'
-                                key={task.id}
-                                task={task}
-                                onDelete={() => handleDeleteTask(task.id)}
-                            />
-                        ))}
-                    </div>
+        <main className="main_container">
+            <div className='task_container'>
+                <h2>Lista de Tarefas</h2>
+                <div className='input_add_task'>
+                    <input
+                        type="text"
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        placeholder="Digite uma nova tarefa"
+                    />
                 </div>
-            </main>
-            <Footer />
+                <button className='btn_add' onClick={handleAddTask}>Adicionar</button>
+                <div className='tasks'>
+                    {tasks.map(task => (
+                        <Task className='task_map'
+                            key={task.id} 
+                            task={task}
+                            onDelete={() => handleDeleteTask(task.id)} 
+                        />
+                    ))}
+                </div>
+            </div>
+        </main>
+        <Footer/>
         </>
     );
 };
