@@ -20,7 +20,7 @@ export default function AuthPage () {
         event.preventDefault();
 
         try {
-            const response = await Axios.post("https://lista-de-tarefas-backend.onrender.com/login", {
+            const response = await Axios.post("http://localhost:5000/login", {
                 username,
                 password
             });

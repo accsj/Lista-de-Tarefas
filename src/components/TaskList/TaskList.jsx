@@ -7,11 +7,14 @@ import Footer from '../Footer/Footer';
 const TaskList = () => {
     const [tasks, setTasks] = useState([]);
     const [inputValue, setInputValue] = useState('');
+    const token = document.cookie.split(';').find(cookie => cookie.trim().startsWith('token'));
 
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await axios.get('https://lista-de-tarefas-backend.onrender.com/tasklist', { withCredentials: true });
+                const response = await axios.get('https://lista-de-tarefas-backend.onrender.com/tasklist', { withCredentials: true, headers: {
+                    'Authorization': `Bearer ${token.split('=')[1]}`
+                } });
                 setTasks(response.data);
             } catch (error) {
                 toast.error('Erro ao buscar tarefas', {
@@ -51,7 +54,9 @@ const TaskList = () => {
         try {
             const response = await axios.post('https://lista-de-tarefas-backend.onrender.com/addtask', {
                 title: inputValue,
-            }, { withCredentials: true }); 
+            }, { withCredentials: true, headers: {
+                'Authorization': `Bearer ${token.split('=')[1]}`
+            }  }); 
 
             const newTask = response.data;
             setTasks([...tasks, newTask]);
@@ -82,7 +87,9 @@ const TaskList = () => {
 
     const handleDeleteTask = async taskId => { 
         try {
-            await axios.delete(`https://lista-de-tarefas-backend.onrender.com/deletetask/${taskId}`, { withCredentials: true });
+            await axios.delete(`https://lista-de-tarefas-backend.onrender.com/deletetask/${taskId}`, { withCredentials: true, headers: {
+                'Authorization': `Bearer ${token.split('=')[1]}`
+            }  });
             const newTasks = tasks.filter(task => task.id !== taskId); 
             setTasks(newTasks);
             toast.success('Tarefa Excluida', {
