@@ -38,11 +38,14 @@ body {
 .auth_title {
     font-size: 2rem;
     cursor: pointer;
+}
+
+.auth_title h1 {
     -webkit-transition: -webkit-transform .2s ease;
     transition: transform .2s ease;
 }
 
-.auth_title:hover {
+.auth_title h1:hover {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
