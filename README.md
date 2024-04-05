@@ -23,7 +23,7 @@ OBS: Ao tentar realizar qualquer requisição na aplicação haverá uma delay d
 ![Screenshot 2024-04-04 at 14-17-44 Lista de tarefas](https://github.com/accsj/Lista-de-Tarefas/assets/109449153/784bdb3d-ea9b-44bc-b58b-53737181d3ec)
 
 
-![Screenshot 2024-04-04 at 14-18-01 Lista de tarefas](https://github.com/accsj/Lista-de-Tarefas/assets/109449153/2f62f67a-bd66-48e6-8c01-9ab6b74fcb71)
+![Screenshot 2024-04-05 at 02-46-51 Lista de tarefas](https://github.com/accsj/Lista-de-Tarefas/assets/109449153/3bdc26c0-2b2e-47a4-9fe9-8d81d3f89a89)
 
 
-![Screenshot 2024-04-04 at 14-18-46 Lista de tarefas](https://github.com/accsj/Lista-de-Tarefas/assets/109449153/25f8deae-4a0e-42ea-a354-46d12d037a3f)
+![Screenshot 2024-04-05 at 02-48-00 Lista de tarefas](https://github.com/accsj/Lista-de-Tarefas/assets/109449153/50e35366-d02a-410b-84cb-03699fd8d5bd)
