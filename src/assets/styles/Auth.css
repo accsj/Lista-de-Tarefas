@@ -35,12 +35,9 @@ body {
     margin-top: 2rem;
 }
 
-.auth_title {
+.auth_title h1 {
     font-size: 2rem;
     cursor: pointer;
-}
-
-.auth_title h1 {
     -webkit-transition: -webkit-transform .2s ease;
     transition: transform .2s ease;
 }
